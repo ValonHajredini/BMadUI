@@ -1,0 +1,93 @@
+<div class="project-list-container"
+     tabindex="0"
+     (keydown)="onKeyDown($event)"
+     [attr.aria-label]="'Project list with ' + projectCount() + ' projects'">
+
+  <!-- Header with refresh button -->
+  <div class="project-list-header">
+    <h3 class="project-list-title">Projects</h3>
+    <button mat-icon-button
+            [disabled]="isScanning()"
+            (click)="onRefreshClick()"
+            matTooltip="Refresh project list"
+            aria-label="Refresh project list">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="isScanning()" class="loading-state">
+    <mat-spinner diameter="32"></mat-spinner>
+    <p class="loading-text">Scanning for projects...</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="showErrorState()" class="error-state">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <p class="error-text">{{ emptyStateMessage() }}</p>
+    <button mat-stroked-button
+            (click)="onRefreshClick()"
+            class="retry-button">
+      <mat-icon>refresh</mat-icon>
+      Retry
+    </button>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="showEmptyState()" class="empty-state">
+    <mat-icon class="empty-icon">folder_open</mat-icon>
+    <p class="empty-text">{{ emptyStateMessage() }}</p>
+  </div>
+
+  <!-- Project list -->
+  <mat-list *ngIf="hasProjects() && !isScanning()"
+            class="project-list"
+            role="listbox"
+            [attr.aria-label]="'List of ' + projectCount() + ' projects'">
+
+    <mat-list-item *ngFor="let project of projects(); let i = index; trackBy: trackByProjectId"
+                   class="project-item"
+                   [class.selected]="isProjectSelected(project)"
+                   [class.focused]="isProjectFocused(i)"
+                   [matTooltip]="getProjectTooltip(project)"
+                   [attr.aria-selected]="isProjectSelected(project)"
+                   [attr.aria-posinset]="i + 1"
+                   [attr.aria-setsize]="projectCount()"
+                   role="option"
+                   (click)="onProjectClick(project, i)"
+                   tabindex="-1">
+
+      <mat-icon matListItemIcon class="project-icon">folder</mat-icon>
+
+      <div matListItemTitle class="project-name">
+        {{ project.name }}
+      </div>
+
+      <div matListItemLine class="project-metadata">
+        <span class="project-path" [title]="project.path">
+          {{ project.path }}
+        </span>
+        <span class="project-last-accessed">
+          {{ formatLastAccessed(project.lastAccessed) }}
+        </span>
+      </div>
+
+      <!-- Selection indicator -->
+      <mat-icon *ngIf="isProjectSelected(project)"
+                matListItemIcon
+                class="selection-indicator"
+                aria-hidden="true">
+        check_circle
+      </mat-icon>
+
+    </mat-list-item>
+  </mat-list>
+
+  <!-- Project count footer -->
+  <div *ngIf="hasProjects() && !isScanning()" class="project-count-footer">
+    <span class="project-count-text">
+      {{ projectCount() }} project{{ projectCount() === 1 ? '' : 's' }} found
+    </span>
+  </div>
+
+</div>

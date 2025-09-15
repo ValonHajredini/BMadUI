@@ -1,0 +1,268 @@
+.project-list-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  overflow: hidden;
+  background-color: var(--mat-app-surface);
+  border-radius: 8px;
+  border: 1px solid var(--mat-app-outline-variant);
+
+  &:focus {
+    outline: 2px solid var(--mat-app-primary);
+    outline-offset: -2px;
+  }
+}
+
+.project-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--mat-app-outline-variant);
+}
+
+.project-list-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--mat-app-on-surface);
+}
+
+// Loading state
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.loading-text {
+  margin: 16px 0 0 0;
+  color: var(--mat-app-on-surface-variant);
+  font-size: 14px;
+}
+
+// Error state
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: var(--mat-app-error);
+  margin-bottom: 16px;
+}
+
+.error-text {
+  margin: 0 0 16px 0;
+  color: var(--mat-app-on-surface-variant);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.retry-button {
+  gap: 8px;
+}
+
+// Empty state
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: var(--mat-app-on-surface-variant);
+  margin-bottom: 16px;
+}
+
+.empty-text {
+  margin: 0;
+  color: var(--mat-app-on-surface-variant);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+// Project list
+.project-list {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--mat-app-surface-variant);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--mat-app-outline);
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--mat-app-outline-variant);
+    }
+  }
+}
+
+.project-item {
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid transparent;
+
+  &:hover {
+    background-color: var(--mat-app-surface-variant);
+  }
+
+  &.focused {
+    border-color: var(--mat-app-primary);
+    background-color: var(--mat-app-primary-container);
+  }
+
+  &.selected {
+    background-color: var(--mat-app-secondary-container);
+    color: var(--mat-app-on-secondary-container);
+
+    .project-icon {
+      color: var(--mat-app-secondary);
+    }
+  }
+
+  &.selected.focused {
+    border-color: var(--mat-app-primary);
+    background-color: var(--mat-app-tertiary-container);
+  }
+}
+
+.project-icon {
+  color: var(--mat-app-primary);
+  margin-right: 12px;
+}
+
+.project-name {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--mat-app-on-surface);
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.project-path {
+  font-size: 12px;
+  color: var(--mat-app-on-surface-variant);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+.project-last-accessed {
+  font-size: 11px;
+  color: var(--mat-app-outline);
+  font-style: italic;
+}
+
+.selection-indicator {
+  color: var(--mat-app-secondary) !important;
+  margin-left: auto;
+}
+
+// Project count footer
+.project-count-footer {
+  margin-top: 16px;
+  padding-top: 8px;
+  border-top: 1px solid var(--mat-app-outline-variant);
+  text-align: center;
+}
+
+.project-count-text {
+  font-size: 12px;
+  color: var(--mat-app-on-surface-variant);
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .project-list-container {
+    padding: 12px;
+  }
+
+  .project-name {
+    font-size: 14px;
+  }
+
+  .project-path {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-list-container {
+    padding: 8px;
+  }
+
+  .project-list-header {
+    margin-bottom: 12px;
+  }
+
+  .project-list-title {
+    font-size: 16px;
+  }
+
+  .project-path {
+    max-width: 120px;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .project-item {
+    &.selected {
+      border: 2px solid var(--mat-app-on-surface);
+    }
+
+    &.focused {
+      border: 2px solid var(--mat-app-primary);
+      outline: 2px solid var(--mat-app-on-surface);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .project-item {
+    transition: none;
+  }
+}

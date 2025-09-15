@@ -1,0 +1,72 @@
+<div class="bmad-app">
+  <header class="app-header">
+    <div class="header-content">
+      <div class="app-logo">
+        <h1>{{ title() }}</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <div class="status-indicators">
+        @if (isElectron()) {
+          <span class="electron-status">⚡ Electron Ready</span>
+        }
+        @if (platform()) {
+          <span class="platform-info">{{ platform() }}</span>
+        }
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="welcome-section">
+      <h2>Welcome to BMad GUI</h2>
+      <p>Your AI-Powered Desktop Assistant for software development and project management.</p>
+
+      <div class="getting-started">
+        <h3>Getting Started</h3>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h4>AI Agents</h4>
+            <p>Interact with specialized AI agents for different development tasks</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">📁</div>
+            <h4>Project Management</h4>
+            <p>Scan and manage your development projects with BMad core integration</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h4>Conversations</h4>
+            <p>Chat with AI assistants to get help with coding, debugging, and planning</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">⚙️</div>
+            <h4>Automation</h4>
+            <p>Automate repetitive development tasks and workflows</p>
+          </div>
+        </div>
+      </div>
+
+      @if (isElectron()) {
+        <div class="electron-features">
+          <h3>Desktop Features</h3>
+          <ul>
+            <li>Native file system access</li>
+            <li>System integration and notifications</li>
+            <li>Offline-first architecture</li>
+            <li>Cross-platform compatibility</li>
+          </ul>
+        </div>
+      } @else {
+        <div class="web-warning">
+          <p>⚠️ This application is optimized for desktop use with Electron. Some features may be limited in the browser.</p>
+        </div>
+      }
+    </div>
+  </main>
+
+  <router-outlet />
+</div>

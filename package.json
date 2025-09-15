@@ -1,0 +1,53 @@
+{
+  "name": "bmad-gui",
+  "version": "1.0.0",
+  "description": "BMad GUI - AI-Powered Desktop Assistant",
+  "main": "dist/main/main.js",
+  "author": "BMad Team",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "npm run build:renderer && npm run build:main",
+    "build:renderer": "cd src/renderer && npm run build",
+    "build:main": "tsc -p src/main/tsconfig.json",
+    "dev": "concurrently \"npm run dev:renderer\" \"wait-on http://localhost:4200 && npm run electron:dev\"",
+    "dev:renderer": "cd src/renderer && npx ng serve --port 4200",
+    "electron:dev": "cross-env NODE_ENV=development electron .",
+    "electron": "electron .",
+    "pack": "electron-builder",
+    "dist": "npm run build && electron-builder",
+    "postinstall": "cd src/renderer && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.0.0",
+    "electron": "^38.1.0",
+    "electron-builder": "^25.1.8",
+    "typescript": "^5.9.2",
+    "wait-on": "^8.0.5"
+  },
+  "dependencies": {
+    "electron-is-dev": "^3.0.1",
+    "electron-log": "^5.4.3"
+  },
+  "build": {
+    "appId": "com.bmad.gui",
+    "productName": "BMad GUI",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*"
+    ],
+    "mac": {
+      "icon": "assets/icon.icns"
+    },
+    "win": {
+      "icon": "assets/icon.ico"
+    },
+    "linux": {
+      "icon": "assets/icon.png"
+    }
+  }
+}
